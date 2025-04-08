@@ -48,6 +48,7 @@ export class AuthController {
 
       req.session.accessToken = tokenData.accessToken
 
+      console.log('redirecting')
       res.redirect('/user')
     } catch (error) {
       console.error(error)
