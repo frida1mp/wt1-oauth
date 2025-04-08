@@ -13,9 +13,8 @@ export const router = express.Router()
 const controller = new AuthController()
 
 router.get('/', controller.login)
-router.get('/callback', (req, res) => {
-    controller.callback(req, res)
-})
+router.get('/callback', controller.callback.bind(controller))
+
 router.get('/logout', (req, res) => {
     console.log('req', req.session)
     controller.logout(req, res)
