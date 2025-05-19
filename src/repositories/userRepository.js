@@ -28,7 +28,7 @@ export const userRepository = {
    */
   async fetchUserActivities (accessToken, userId) {
     try {
-      const response = await axios.get(`${process.env.GITLAB_BASE_URL}/api/v4/users/${userId}/events`, {
+      const response = await axios.get(`${process.env.GITLAB_BASE_URL}/api/v4/users/${userId}/events?per_page=101`, {
         headers: {
           Authorization: `Bearer ${accessToken}`
         }
