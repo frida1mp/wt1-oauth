@@ -15,7 +15,11 @@ const controller = new AuthController()
 router.get('/', controller.login)
 router.get('/callback', controller.callback.bind(controller))
 
-router.get('/logout', (req, res) => {
-    console.log('req', req.session)
-    controller.logout(req, res)
+router.get('/logout', (req, res, next) => {
+  req.session.destroy(err => {
+    if (err) {
+      return next(err)
+    }
+    res.redirect('/')
+  })
 })
