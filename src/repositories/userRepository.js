@@ -75,7 +75,7 @@ export const userRepository = {
             }
           })
 
-          const projectsResponse = await axios.get(`${process.env.GITLAB_BASE_URL}/api/v4/groups/${groupId}/projects`, {
+          const projectsResponse = await axios.get(`${process.env.GITLAB_BASE_URL}/api/v4/groups/${groupId}/projects?per_page=5`, {
             headers: {
               Authorization: `Bearer ${accessToken}`
             }
