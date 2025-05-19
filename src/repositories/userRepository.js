@@ -46,7 +46,7 @@ export const userRepository = {
    */
   async fetchGroups (accessToken) {
     try {
-      const response = await axios.get(`${process.env.GITLAB_BASE_URL}/api/v4/groups`, {
+        const response = await axios.get(`${process.env.GITLAB_BASE_URL}/api/v4/groups/${groupId}/projects?include_subgroups=true`, {
         headers: {
           Authorization: `Bearer ${accessToken}`
         }
