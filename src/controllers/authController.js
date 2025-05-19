@@ -20,7 +20,7 @@ export class AuthController {
    * @param {object} res -
    */
   login (req, res) {
-    const authorizationUrl = `${process.env.GITLAB_BASE_URL}/oauth/authorize?client_id=${process.env.CLIENT_ID}&redirect_uri=${process.env.REDIRECT_URI}&response_type=code&scope=read_user api`
+    const authorizationUrl = `${process.env.GITLAB_BASE_URL}/oauth/authorize?client_id=${process.env.CLIENT_ID}&redirect_uri=${process.env.REDIRECT_URI}&response_type=code&scope=api`
 
     res.redirect(authorizationUrl)
   }
