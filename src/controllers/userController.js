@@ -1,6 +1,8 @@
 /* eslint-disable jsdoc/require-returns */
 /* eslint-disable jsdoc/require-description */
 import { userService } from '../services/userService.js'
+import { paginate } from '../utils/paginate.js'
+
 /**
  * @file Defines the AuthController class.
  * @module controllers/AuthController
@@ -10,8 +12,8 @@ import { userService } from '../services/userService.js'
 export class UserController {
   /**
    *
-   * @param req
-   * @param res
+   * @param {object} req - The Express request object.
+   * @param {object} res - The Express response object.
    */
   async loadUser (req, res) {
     try {
@@ -32,8 +34,8 @@ export class UserController {
 
   /**
    *
-   * @param req
-   * @param res
+   * @param {object} req - The Express request object.
+   * @param {object} res - The Express response object.
    */
   async profile (req, res) {
     try {
@@ -44,7 +46,6 @@ export class UserController {
     }
   }
 
-  // eslint-disable-next-line jsdoc/require-description
   /**
    *
    * @param {object} req -
@@ -61,8 +62,8 @@ export class UserController {
 
   /**
    *
-   * @param req
-   * @param res
+   * @param {object} req - The Express request object.
+   * @param {object} res - The Express response object.
    */
   async activities (req, res) {
     try {
@@ -70,17 +71,30 @@ export class UserController {
       const userId = req.session.user.id
       const fetchedActivities = await userService.getUserActivities(accessToken, userId)
 
-      const activities = fetchedActivities.activities
-      res.render('activities/index', { session: req.session, activities })
+      const allActivities = fetchedActivities.activities
+
+      // Get current page from query param or default to 1
+      const currentPage = parseInt(req.query.page) || 1
+      const paginated = paginate(allActivities, currentPage, 5)
+
+      res.render('activities/index', {
+        session: req.session,
+        activities: paginated.data,
+        pagination: {
+          currentPage: paginated.currentPage,
+          totalPages: paginated.totalPages
+        }
+      })
     } catch (error) {
       console.error(error)
+      res.status(500).send('Failed to load activities.')
     }
   }
 
   /**
    *
-   * @param req
-   * @param res
+   * @param {object} req - The Express request object.
+   * @param {object} res - The Express response object.
    */
   async projects (req, res) {
     try {
@@ -88,12 +102,10 @@ export class UserController {
 
       const groupsWithProjects = await userService.getUserProjects(accessToken)
 
-      console.log('user', groupsWithProjects.groupsWithProjects[1].projects)
-    
       res.render('projects/index', { session: req.session, Projects: groupsWithProjects.groupsWithProjects })
     } catch (error) {
       console.error(error)
+      res.status(500).send('Failed to load projects.')
     }
   }
-
 }
