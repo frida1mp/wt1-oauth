@@ -45,20 +45,25 @@ export const userRepository = {
    * @param accessToken
    */
   async fetchGroups(accessToken) {
-    try {
-      const response = await axios.get(`${process.env.GITLAB_BASE_URL}/api/v4/groups/${groupIds}/projects?include_subgroups=true`, {
-        headers: {
-          Authorization: `Bearer ${accessToken}`
-        }
-      })
+  try {
+    const response = await axios.get(`${process.env.GITLAB_BASE_URL}/api/v4/groups`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`
+      },
+      params: {
+        include_subgroups: true,
+        // optionally add 'min_access_level' or 'owned' filters here
+      }
+    })
 
-      const groupIds = response.data.map(group => group.id)
-      return groupIds
-    } catch (error) {
-      console.error('Error fetching group IDs:', error.response ? error.response.data : error.message)
-      throw new Error('Failed to fetch group IDs from GitLab.')
-    }
-  },
+    // Assuming you want just the group IDs
+    const groupIds = response.data.map(group => group.id)
+    return groupIds
+  } catch (error) {
+    console.error('Error fetching groups:', error.response ? error.response.data : error.message)
+    throw new Error('Failed to fetch groups from GitLab.')
+  }
+},
   /**
    *
    * @param accessToken
