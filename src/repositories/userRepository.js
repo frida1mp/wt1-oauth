@@ -49,10 +49,6 @@ export const userRepository = {
     const response = await axios.get(`${process.env.GITLAB_BASE_URL}/api/v4/groups`, {
       headers: {
         Authorization: `Bearer ${accessToken}`
-      },
-      params: {
-        include_subgroups: true
-        // optionally add 'min_access_level' or 'owned' filters here
       }
     })
 
