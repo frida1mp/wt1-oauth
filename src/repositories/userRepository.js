@@ -51,7 +51,7 @@ export const userRepository = {
         Authorization: `Bearer ${accessToken}`
       },
       params: {
-        include_subgroups: true,
+        include_subgroups: true
         // optionally add 'min_access_level' or 'owned' filters here
       }
     })
