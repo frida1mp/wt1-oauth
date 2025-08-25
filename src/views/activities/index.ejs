@@ -121,7 +121,7 @@
       <ul class="pagination">
         <% for (let i=1; i <=pagination.totalPages; i++) { %>
           <li class="page-item <%= i === pagination.currentPage ? 'active' : '' %>">
-            <a class="page-link" href="?page=<%= i %>">
+            <a class="page-link" href="/user/activities?page=<%= i %>">
               <%= i %>
             </a>
           </li>
