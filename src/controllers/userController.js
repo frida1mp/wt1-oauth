@@ -75,7 +75,7 @@ export class UserController {
 
       // Get current page from query param or default to 1
       const currentPage = parseInt(req.query.page) || 1
-      const paginated = paginate(allActivities, currentPage, 5)
+      const paginated = paginate(allActivities, currentPage, 25)
 
       res.render('activities/index', {
         session: req.session,
